@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--=============== FAVICON ===============-->
     <link rel="shortcut icon" href="assets/img/coffee-cup.png" type="image/x-icon" />
-    <!-- CSS MANUAL -->
-    <link rel="stylesheet" href="assets/css/style.css" />
     <!-- Boxicons cdn -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-
-    <title>Cafe Website</title>
+    <!-- CSS MANUAL -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- Alpine js cdn -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Cafe Website WPU</title>
   </head>
   <body>
     <!-- Navbar First-->
@@ -43,7 +44,7 @@
       <!-- cart section start -->
       <div class="shopping-cart">
         <div class="cart-item">
-          <img src="assets/img/products.jpg" alt="products" />
+          <img src="assets/img/1.jpg" alt="products" />
           <div class="item-detail">
             <h3>Produk Kopi</h3>
             <div class="item-price">IDR 30K</div>
@@ -52,7 +53,7 @@
         </div>
 
         <div class="cart-item">
-          <img src="assets/img/products.jpg" alt="products" />
+          <img src="assets/img/1.jpg" alt="products" />
           <div class="item-detail">
             <h3>Produk Kopi</h3>
             <div class="item-price">IDR 30K</div>
@@ -61,7 +62,7 @@
         </div>
 
         <div class="cart-item">
-          <img src="assets/img/products.jpg" alt="products" />
+          <img src="assets/img/1.jpg" alt="products" />
           <div class="item-detail">
             <h3>Produk Kopi</h3>
             <div class="item-price">IDR 30K</div>
@@ -140,72 +141,35 @@
       </div>
     </section>
     <!-- Menu Section End -->
+
     <!-- Product section Start -->
-    <section class="products" id="products">
+    <section class="products" id="products" x-data="products">
       <h2><span>Produk Unggulan</span> Kami</h2>
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, dicta odio totam omnis provident ex.</p>
 
       <div class="row">
-        <div class="product-card">
-          <div class="products-icon">
-            <a href="#"><i class="bx bx-cart"></i></a>
-            <a href="#" class="item-detail-btn"><i class="bx bx-detail"></i></a>
-          </div>
-          <div class="product-image">
-            <img src="assets/img/products.jpg" alt="produk 1" />
-          </div>
-          <div class="product-content">
-            <h3>Coffee Beans Regular</h3>
-            <div class="product-stars">
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bxs-star"></i>
-              <i class="bx bx-star"></i>
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="products-icon">
+              <a href="#" @click.prevent="$store.cart.add(item)"><i class="bx bx-cart"></i></a>
+              <a href="#" class="item-detail-btn"><i class="bx bx-detail"></i></a>
             </div>
-            <div class="product-price">IDR 30K <span>IDR 55K</span></div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="products-icon">
-            <a href="#"><i class="bx bx-cart"></i></a>
-            <a href="#" class="item-detail-btn"><i class="bx bx-detail"></i></a>
-          </div>
-          <div class="product-image">
-            <img src="assets/img/products.jpg" alt="produk 1" />
-          </div>
-          <div class="product-content">
-            <h3>Coffee Beans Regular</h3>
-            <div class="product-stars">
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
+            <div class="product-image">
+              <img :src="`assets/img/${item.img}`" :alt="item.name" />
             </div>
-            <div class="product-price">IDR 30K <span>IDR 55K</span></div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="products-icon">
-            <a href="#"><i class="bx bx-cart"></i></a>
-            <a href="#" class="item-detail-btn"><i class="bx bx-detail"></i></a>
-          </div>
-          <div class="product-image">
-            <img src="assets/img/products.jpg" alt="produk 1" />
-          </div>
-          <div class="product-content">
-            <h3>Coffee Beans Regular</h3>
-            <div class="product-stars">
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
-              <i class="bx bx-star"></i>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bxs-star"></i>
+                <i class="bx bx-star"></i>
+              </div>
+              <div class="product-price"><span x-text="rupiah(item.price)"></span></div>
             </div>
-            <div class="product-price">IDR 30K <span>IDR 55K</span></div>
           </div>
-        </div>
+        </template>
       </div>
     </section>
     <!-- Product section End -->
@@ -267,7 +231,7 @@
       <div class="modal-container">
         <a href="#" class="close"><i class="bx bx-x"></i></a>
         <div class="modal-content">
-          <img src="assets/img/products.jpg" alt="produk detail" />
+          <img src="assets/img/1.jpg" alt="produk detail" />
           <div class="product-content">
             <h1>Product 1</h1>
             <p>
@@ -288,5 +252,6 @@
       </div>
     </div>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/app.js"></script>
   </body>
 </html>

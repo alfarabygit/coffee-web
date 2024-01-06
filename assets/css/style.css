@@ -407,11 +407,11 @@ html {
   font-size: 1.3rem;
   font-weight: bold;
 }
-.products .product-price span {
+/* .products .product-price span {
   text-decoration: line-through;
   font-weight: lighter;
   font-size: 1rem;
-}
+} */
 /* Contact Style */
 .contact .row {
   display: flex;

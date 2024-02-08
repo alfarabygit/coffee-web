@@ -15,7 +15,7 @@
   </head>
   <body>
     <!-- Navbar First-->
-    <nav class="navbar">
+    <nav class="navbar" x-data>
       <a href="#" class="navbar-logo">Kopi <span>Kenangan</span></a>
 
       <div class="navbar-nav">
@@ -28,7 +28,7 @@
 
       <div class="navbar-extra">
         <a href="#" id="search-btn"><i class="bx bx-search"></i></a>
-        <a href="#" id="cart-btn"><i class="bx bx-cart"></i></a>
+        <a href="#" id="cart-btn"><i class="bx bx-cart"></i> <span class="quantity__count" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span></a>
         <a href="#" id="hamburger"><i class="bx bx-menu"></i></a>
       </div>
 
@@ -43,31 +43,46 @@
 
       <!-- cart section start -->
       <div class="shopping-cart">
-        <div class="cart-item">
-          <img src="assets/img/1.jpg" alt="products" />
-          <div class="item-detail">
-            <h3>Produk Kopi</h3>
-            <div class="item-price">IDR 30K</div>
+        <template x-for="(item, index) in $store.cart.items" x-key="index">
+          <div class="cart-item">
+            <img :src="`assets/img/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+            <!-- <i class="bx bxs-trash delete"></i> -->
           </div>
-          <i class="bx bxs-trash delete"></i>
-        </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length">Cart is Empty</h4>
+        <h4 x-show="$store.cart.items.length"><span x-text="rupiah($store.cart.total)"></span></h4>
 
-        <div class="cart-item">
-          <img src="assets/img/1.jpg" alt="products" />
-          <div class="item-detail">
-            <h3>Produk Kopi</h3>
-            <div class="item-price">IDR 30K</div>
-          </div>
-          <i class="bx bxs-trash delete"></i>
-        </div>
+        <div class="form-container">
+          <form action="" id="checkoutform">
+            <h5>Customer Detail</h5>
 
-        <div class="cart-item">
-          <img src="assets/img/1.jpg" alt="products" />
-          <div class="item-detail">
-            <h3>Produk Kopi</h3>
-            <div class="item-price">IDR 30K</div>
-          </div>
-          <i class="bx bxs-trash delete"></i>
+            <label for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name" />
+            </label>
+
+            <label for="email">
+              <span>Email</span>
+              <input type="email" name="email" id="email" />
+            </label>
+
+            <label for="email">
+              <span>PHone</span>
+              <input type="tel" name="phone" id="phone" autocomplete="off" />
+            </label>
+
+            <button class="checkout-button" type="submit" id="checkout-button" value="checkout">Checkout</button>
+          </form>
         </div>
       </div>
       <!-- cart section end -->
@@ -251,6 +266,7 @@
         </div>
       </div>
     </div>
+
     <script src="assets/js/main.js"></script>
     <script src="assets/js/app.js"></script>
   </body>
